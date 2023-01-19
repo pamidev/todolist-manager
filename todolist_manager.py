@@ -6,7 +6,7 @@ import pickle
 import click
 
 
-DB_FILENAME = "todos.db"
+DB_FILENAME = "todlist_database.db"
 
 
 class TodoItem:
