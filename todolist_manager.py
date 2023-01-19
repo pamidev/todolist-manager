@@ -2,27 +2,24 @@
 # python todolist_manager.py
 
 import pickle
+import sys
+from dataclasses import dataclass
 
 import click
-
 
 DB_FILENAME = "todlist_database.db"
 
 
+@dataclass
 class TodoItem:
-    def __init__(self, id: int, desc: str, done: bool):
-        self.id = id
-        self.desc = desc
-        self.done = done
+    id: int
+    desc: str
+    done: bool
 
-    def __eq__(self, other):
-        return (self.id == other.id and
-                self.desc == other.desc and
-                self.done == other.done)
-
-    def __repr__(self):
-        return f"TodoItem(id={self.id!r}, desc={self.desc!r}, done={self.done!r})"
-
+    def __post_init__(self):
+        if not self.desc:
+            raise ValueError("Description cannot be empty.")
+    
 
 def find_new_id(todos: list[TodoItem]) -> int:
     ids = {todo.id for todo in todos}
@@ -103,7 +100,13 @@ def list() -> None:
 @click.argument('description')
 def add(description: str) -> None:
     todos = read_db_or_init()
-    add_todo(description, todos)
+
+    try:
+        add_todo(description, todos)
+    except ValueError as e:
+        print(f"ValueError: {e.args[0]}")
+        sys.exit(0)
+
     save_db(todos)
     print(":-) Added new item to database.")
 
