@@ -1,7 +1,8 @@
 # pip install -r requirements.txt
 # pytest todolist_manager_tests.py
 
-from todolist_manager import find_new_id, read_db_or_init, save_db, TodoItem, add_todo
+from todolist_manager import (TodoItem, add_todo, find_new_id, read_db_or_init,
+                              save_db)
 
 
 def test_empty_list():
