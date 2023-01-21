@@ -1,3 +1,3 @@
 # ToDo List Manager
 
-Python program that helps manage to-do list.
+A Python program that helps to manage your to-do list.
